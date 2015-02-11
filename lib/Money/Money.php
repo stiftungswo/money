@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Money;
+namespace Swo\Money\lib\Money;
 
 class Money
 {
@@ -33,7 +33,9 @@ class Money
      */
     public function __construct($amount, Currency $currency)
     {
-        if (!is_int($amount)) {
+        if(is_string($amount) || is_float($amount)) {
+            $amount = $this->stringToUnits($amount);
+        } elseif (!is_int($amount)) {
             throw new InvalidArgumentException("The first parameter of Money must be an integer. It's the amount, expressed in the smallest units of currency (eg cents)");
         }
         $this->amount = $amount;
@@ -296,5 +298,76 @@ class Money
         $units .= isset($matches['decimal2']) ? $matches['decimal2'] : "0";
 
         return (int) $units;
+    }
+
+    /**
+     * Function to Round the Given Integer Value to the next 5 or 0
+     * @param $value
+     *
+     * @return mixed|string
+     */
+    public function roundTo5($value)
+    {
+        $valuelastchar = substr($value, -1);
+        $value = substr_replace($value, '', -1);
+        switch($valuelastchar){
+        case '1' || '2' || '8' || '9':
+            $value .= '0';
+            break;
+        case '6' || '7' || '3' || '4':
+            $value .= '5';
+            break;
+        default:
+            $value .= $valuelastchar;
+            break;
+        }
+        return $value;
+    }
+
+    /**
+     * @param      $amount
+     * @param bool $roundToFive
+     * @param bool $currency
+     *
+     * @return mixed|string
+     */
+    public function format($amount, $roundToFive = true, $currency = false)
+    {
+        if($roundToFive) {
+            $amount = $this->roundTo5($amount);
+        }
+        $amount = $this->UnitsTostring($amount);
+        if($currency)
+            $amount .= $this->getCurrency()->getName();
+        return $amount;
+    }
+
+    /**
+     * Counterpart of stringToUnits
+     * @param $unit
+     *
+     * @return string
+     */
+    public function UnitsTostring($unit)
+    {
+        $cents = substr($unit, -2);
+        $digits = substr_replace($unit, '', -2);
+        return $digits.'.'.$cents;
+    }
+
+    /**
+     * @param bool $roundToFive
+     * @param bool $showCurrency
+     *
+     * @return mixed|string
+     */
+    public function serialize($roundToFive = true, $showCurrency = false)
+    {
+        return $this->format($this->getAmount(), $roundToFive, $showCurrency);
+    }
+
+    public function __toString()
+    {
+        return $this->serialize();
     }
 }

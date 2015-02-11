@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Money;
+namespace Swo\Money\lib\Money;
 
 class Currency
 {
