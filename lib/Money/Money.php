@@ -35,6 +35,8 @@ class Money
     {
         if(is_string($amount) || is_float($amount)) {
             $amount = $this->stringToUnits($amount);
+        } elseif(is_null($amount)){
+	        $amount = 0;
         } elseif (!is_int($amount)) {
             throw new InvalidArgumentException("The first parameter of Money must be an integer. It's the amount, expressed in the smallest units of currency (eg cents)");
         }
