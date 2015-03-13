@@ -22,14 +22,14 @@ class Money
      */
     private $amount;
 
-    /** @var \Money\Currency */
+    /** @var Currency */
     private $currency;
 
     /**
      * Create a Money instance
      * @param  integer $amount    Amount, expressed in the smallest units of $currency (eg cents)
-     * @param  \Money\Currency $currency
-     * @throws \Money\InvalidArgumentException
+     * @param  Currency $currency
+     * @throws InvalidArgumentException
      */
     public function __construct($amount, Currency $currency)
     {
@@ -49,7 +49,7 @@ class Money
      * @example $fiveDollar = Money::USD(500);
      * @param string $method
      * @param array $arguments
-     * @return \Money\Money
+     * @return Money
      */
     public static function __callStatic($method, $arguments)
     {
@@ -57,7 +57,7 @@ class Money
     }
 
     /**
-     * @param \Money\Money $other
+     * @param Money $other
      * @return bool
      */
     public function isSameCurrency(Money $other)
@@ -66,7 +66,7 @@ class Money
     }
 
     /**
-     * @throws \Money\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function assertSameCurrency(Money $other)
     {
@@ -76,7 +76,7 @@ class Money
     }
 
     /**
-     * @param \Money\Money $other
+     * @param Money $other
      * @return bool
      */
     public function equals(Money $other)
@@ -87,7 +87,7 @@ class Money
     }
 
     /**
-     * @param \Money\Money $other
+     * @param Money $other
      * @return int
      */
     public function compare(Money $other)
@@ -103,7 +103,7 @@ class Money
     }
 
     /**
-     * @param \Money\Money $other
+     * @param Money $other
      * @return bool
      */
     public function greaterThan(Money $other)
@@ -112,7 +112,7 @@ class Money
     }
     
     /**
-     * @param \Money\Money $other
+     * @param Money $other
      * @return bool
      */
     public function greaterThanOrEqual(Money $other)
@@ -121,7 +121,7 @@ class Money
     }
 
     /**
-     * @param \Money\Money $other
+     * @param Money $other
      * @return bool
      */
     public function lessThan(Money $other)
@@ -130,7 +130,7 @@ class Money
     }
     
     /**
-     * @param \Money\Money $other
+     * @param Money $other
      * @return bool
      */
     public function lessThanOrEqual(Money $other)
@@ -156,7 +156,7 @@ class Money
     }
 
     /**
-     * @return \Money\Currency
+     * @return Currency
      */
     public function getCurrency()
     {
@@ -164,8 +164,8 @@ class Money
     }
 
     /**
-     * @param \Money\Money $addend
-     *@return \Money\Money 
+     * @param Money $addend
+     *@return Money 
      */
     public function add(Money $addend)
     {
@@ -175,8 +175,8 @@ class Money
     }
 
     /**
-     * @param \Money\Money $subtrahend
-     * @return \Money\Money
+     * @param Money $subtrahend
+     * @return Money
      */
     public function subtract(Money $subtrahend)
     {
@@ -186,7 +186,7 @@ class Money
     }
 
     /**
-     * @throws \Money\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function assertOperand($operand)
     {
@@ -196,7 +196,7 @@ class Money
     }
 
     /**
-     * @throws \Money\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function assertRoundingMode($rounding_mode)
     {
@@ -208,7 +208,7 @@ class Money
     /**
      * @param $multiplier
      * @param int $rounding_mode
-     * @return \Money\Money
+     * @return Money
      */
     public function multiply($multiplier, $rounding_mode = self::ROUND_HALF_UP)
     {
@@ -223,7 +223,7 @@ class Money
     /**
      * @param $divisor
      * @param int $rounding_mode
-     * @return \Money\Money
+     * @return Money
      */
     public function divide($divisor, $rounding_mode = self::ROUND_HALF_UP)
     {
@@ -238,7 +238,7 @@ class Money
     /**
      * Allocate the money according to a list of ratio's
      * @param array $ratios List of ratio's
-     * @return \Money\Money
+     * @return Money
      */
     public function allocate(array $ratios)
     {
@@ -279,7 +279,7 @@ class Money
 
     /**
      * @param $string
-     * @throws \Money\InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return int
      */
     public static function stringToUnits( $string )
