@@ -8,11 +8,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Swo\Money\lib\Money;
+namespace Money;
 
-/**
- * @see http://www.phpkode.com/tips/item/exception-best-practices-in-php-5-3/
- */
-interface Exception
+class InvalidArgumentException extends \InvalidArgumentException implements Exception
 {
 }

@@ -8,8 +8,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Swo\Money\lib\Money;
+namespace Money;
 
-class InvalidArgumentException extends \InvalidArgumentException implements Exception
+class UnknownCurrencyException extends \Exception implements Exception
 {
 }

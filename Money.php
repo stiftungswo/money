@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Swo\Money\lib\Money;
+namespace Money;
 
 class Money
 {
@@ -56,7 +56,7 @@ class Money
         return new Money($arguments[0], new Currency($method));
     }
 
-    /**
+	/**
      * @param Money $other
      * @return bool
      */
@@ -66,6 +66,7 @@ class Money
     }
 
     /**
+     * @param Money $other
      * @throws InvalidArgumentException
      */
     private function assertSameCurrency(Money $other)
@@ -304,12 +305,12 @@ class Money
 
     /**
      * Function to Round the Given Integer Value to the next 5 or 0
-     * @param $value
      *
-     * @return mixed|string
+     * @return Money
      */
-    public function roundTo5($value)
+    public function roundTo5()
     {
+	    $value = $this->getAmount();
         $valuelastchar = substr($value, -1);
         $value = substr_replace($value, '', -1);
         switch($valuelastchar){
@@ -323,22 +324,22 @@ class Money
             $value .= $valuelastchar;
             break;
         }
-        return $value;
+        return new self(intval($value), $this->getCurrency());
     }
 
     /**
-     * @param      $amount
      * @param bool $roundToFive
      * @param bool $currency
      *
      * @return mixed|string
      */
-    public function format($amount, $roundToFive = true, $currency = false)
+    public function format($roundToFive = true, $currency = false)
     {
+	    $money = $this;
         if($roundToFive) {
-            $amount = $this->roundTo5($amount);
+            $money = $money->roundTo5();
         }
-        $amount = $this->UnitsTostring($amount);
+        $amount = $this->UnitsTostring($money->getAmount());
         if($currency)
             $amount .= $this->getCurrency()->getName();
         return $amount;
@@ -354,22 +355,14 @@ class Money
     {
         $cents = substr($unit, -2);
         $digits = substr_replace($unit, '', -2);
-        return $digits.'.'.$cents;
-    }
-
-    /**
-     * @param bool $roundToFive
-     * @param bool $showCurrency
-     *
-     * @return mixed|string
-     */
-    public function serialize($roundToFive = true, $showCurrency = false)
-    {
-        return $this->format($this->getAmount(), $roundToFive, $showCurrency);
+        $retval = $digits.'.'.$cents;
+	    if($retval === '.0')
+		    return '0.00';
+	    return $retval;
     }
 
     public function __toString()
     {
-        return $this->serialize();
+        return $this->format();
     }
 }

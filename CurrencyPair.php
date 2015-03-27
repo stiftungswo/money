@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Swo\Money\lib\Money;
+namespace Money;
 
 /** @see http://en.wikipedia.org/wiki/Currency_pair */
 class CurrencyPair
@@ -23,10 +23,10 @@ class CurrencyPair
     private $ratio;
 
     /**
-     * @param \Money\Currency $baseCurrency
-     * @param \Money\Currency $counterCurrency
+     * @param Currency $baseCurrency
+     * @param Currency $counterCurrency
      * @param float $ratio
-     * @throws \Money\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct(Currency $baseCurrency, Currency $counterCurrency, $ratio)
     {
@@ -42,7 +42,7 @@ class CurrencyPair
     /**
      * @param  string $iso String representation of the form "EUR/USD 1.2500"
      * @throws \Exception
-     * @return \Money\CurrencyPair
+     * @return CurrencyPair
      */
     public static function createFromIso($iso)
     {
@@ -64,9 +64,9 @@ class CurrencyPair
     }
 
     /**
-     * @param \Money\Money $money
+     * @param Money $money
      * @throws InvalidArgumentException
-     * @return \Money\Money
+     * @return Money
      */
     public function convert(Money $money)
     {
@@ -78,13 +78,13 @@ class CurrencyPair
         return new Money((int) round($money->getAmount() * $this->ratio), $this->counterCurrency);
     }
 
-    /** @return \Money\Currency */
+    /** @return Currency */
     public function getCounterCurrency()
     {
         return $this->counterCurrency;
     }
 
-    /** @return \Money\Currency */
+    /** @return Currency */
     public function getBaseCurrency()
     {
         return $this->baseCurrency;
