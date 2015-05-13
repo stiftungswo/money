@@ -40,7 +40,7 @@ class Money
         } elseif (!is_int($amount)) {
             throw new InvalidArgumentException("The first parameter of Money must be an integer. It's the amount, expressed in the smallest units of currency (eg cents)");
         }
-        $this->amount = $amount;
+        $this->amount = $this->roundTo5($amount);
         $this->currency = $currency;
     }
 
@@ -303,43 +303,55 @@ class Money
         return (int) $units;
     }
 
-    /**
-     * Function to Round the Given Integer Value to the next 5 or 0
-     *
-     * @return Money
-     */
-    public function roundTo5()
+	/**
+	 * Function to Round the Given Integer Value to the next 5 or 0
+	 *
+	 * @param $value
+	 *
+	 * @return Money
+	 */
+    public function roundTo5($value)
     {
-	    $value = $this->getAmount();
-        $valuelastchar = substr($value, -1);
-        $value = substr_replace($value, '', -1);
+        $valuelastchar = intval(substr($value, -1));
         switch($valuelastchar){
-        case '1' || '2' || '8' || '9':
-            $value .= '0';
-            break;
-        case '6' || '7' || '3' || '4':
-            $value .= '5';
-            break;
+        case 1:
+            $value -=1;
+			break;
+	    case 2:
+            $value -=2;
+			break;
+        case 3:
+	        $value +=2;
+			break;
+		case 4:
+			$value +=1;
+			break;
+        case 6:
+	        $value -=1;
+			break;
+		case 7:
+	        $value-=2;
+			break;
+		case 8:
+			$value +=2;
+			break;
+		case 9:
+			$value +=1;
+			break;
         default:
-            $value .= $valuelastchar;
             break;
         }
-        return new self(intval($value), $this->getCurrency());
+        return $value;
     }
 
     /**
-     * @param bool $roundToFive
      * @param bool $currency
      *
      * @return mixed|string
      */
-    public function format($roundToFive = true, $currency = false)
+    public function format($currency = false)
     {
-	    $money = $this;
-        if($roundToFive) {
-            $money = $money->roundTo5();
-        }
-        $amount = $this->UnitsTostring($money->getAmount());
+        $amount = $this->UnitsTostring($this->getAmount());
         if($currency)
             $amount .= $this->getCurrency()->getName();
         return $amount;
