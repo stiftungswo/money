@@ -324,7 +324,7 @@ class Money
     {
         $amount = $this->UnitsTostring($this->getAmount());
         if($currency)
-            $amount .= $this->getCurrency()->getName();
+            $amount .= ' ' . $this->getCurrency()->getName();
         return $amount;
     }
 
