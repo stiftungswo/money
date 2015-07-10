@@ -308,40 +308,11 @@ class Money
 	 *
 	 * @param $value
 	 *
-	 * @return Money
+     * @return integer
 	 */
     public function roundTo5($value)
     {
-        $valuelastchar = intval(substr($value, -1));
-        switch($valuelastchar){
-        case 1:
-            $value -=1;
-			break;
-	    case 2:
-            $value -=2;
-			break;
-        case 3:
-	        $value +=2;
-			break;
-		case 4:
-			$value +=1;
-			break;
-        case 6:
-	        $value -=1;
-			break;
-		case 7:
-	        $value-=2;
-			break;
-		case 8:
-			$value +=2;
-			break;
-		case 9:
-			$value +=1;
-			break;
-        default:
-            break;
-        }
-        return $value;
+        return (int)round($value / 5) * 5;
     }
 
     /**
