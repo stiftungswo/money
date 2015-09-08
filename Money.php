@@ -336,12 +336,7 @@ class Money
      */
     public function UnitsTostring($unit)
     {
-        $cents = substr($unit, -2);
-        $digits = substr_replace($unit, '', -2);
-        $retval = $digits.'.'.$cents;
-	    if($retval === '.0')
-		    return '0.00';
-	    return $retval;
+        return number_format($unit/100, 2, '.', "");
     }
 
     public function __toString()
