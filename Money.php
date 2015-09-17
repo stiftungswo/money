@@ -10,6 +10,9 @@
 
 namespace Money;
 
+/**
+ * @method static Money CHF(int $amount)
+ */
 class Money
 {
     const ROUND_HALF_UP = PHP_ROUND_HALF_UP;
