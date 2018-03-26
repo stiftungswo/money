@@ -23,8 +23,8 @@
         }
     },
     "autoload": {
-        "psr-0": {
-            "Money": "lib"
+        "psr-4": {
+            "Money\\": ""
         }
     },
 
