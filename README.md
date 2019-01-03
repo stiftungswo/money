@@ -1,6 +1,8 @@
 Money
 =====
 
+:exclamation: Attention, this project is not maintained anymore. Please use the original package from [moneyphp](https://github.com/moneyphp/money).
+
 [![Build Status](https://api.travis-ci.org/mathiasverraes/money.png?branch=master)](http://travis-ci.org/mathiasverraes/money)
 
 PHP 5.3+ library to make working with money safer, easier, and fun!
